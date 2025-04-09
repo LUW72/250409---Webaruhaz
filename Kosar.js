@@ -11,25 +11,39 @@ export default class Kosar {
   
     megjelenit() {
       let termek = this.#termekAdat[this.#index];
-  
       let html = `
-      <div class="card mb-3" style="max-width: 540px;">
-        <div class="row g-0">
-          <div class="col-md-4">
-            <img src="${termek.kep}" class="img-fluid rounded-start" alt="${termek.cim}">
-          </div>
-          <div class="col-md-8">
-            <div class="card-body">
-              <h5 class="card-title">${termek.cim}</h5>
-              <p class="card-text">${termek.szerzo}</p>
-              <button type="button" class="btn btn-info">Kosárba</button>
-              <p class="card-text"><small class="text-body-secondary">${termek.ar} Ft</small></p>
+        <div class="card mb-3 shadow-sm p-2">
+          <div class="row g-3 align-items-center">
+            <div class="col-md-3">
+              <img src="..." class="img-fluid rounded" alt="${termek.cim}">
+            </div>
+            <div class="col-md-6">
+              <h5 class="mb-1">${termek.cim}</h5>
+              <p class="mb-2 text-muted">${termek.szerzo}</p>
+              <p class="fw-bold">${termek.ar} Ft</p>
+            </div>
+            <div class="col-md-3 text-end">
+              <div class="input-group mb-2">
+                <button class="btn btn-primary" type="button">−</button>
+                <input type="text" class="form-control text-center" value="1" style="max-width: 50px;">
+                <button class="btn btn-primary" type="button">+</button>
+              </div>
+              <button class="btn btn-primary btn-sm">Eltávolít</button>
             </div>
           </div>
         </div>
-      </div>`;
-  
+      `;
+    
       this.pElem.insertAdjacentHTML("beforeend", html);
     }
+    
+    delete(){
+      this.deleteElem.addEventListener("click", () => {
+        const e = new CustomEvent("delete", { detail: this.#index });
+        window.dispatchEvent(e);
+        
+      });
+    }
+    
   }
   
