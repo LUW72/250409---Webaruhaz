@@ -21,22 +21,26 @@ export default class Konyvek
     megjelenit()
     {
         this.navbarKonyvekGomb.addEventListener("click", ()=>{
+            this.oldalElem.innerHTML = "";
             console.log(this.navbarKonyvekGomb.innerHTML)
             for (let index = 0; index < this.lista.length; index++) 
                 {
-                    this.oldalElem.innerHTML = "";
-                    //new Konyv(this.lista[index].kep, this.lista[index].cim, this.lista[index].szerzo, this.lista[index].ar, this.lista[index]);
+                    new Konyv(index, this.lista, this.oldalElem);
                 }
         });
 
         this.navbarKosarGomb.addEventListener("click", ()=>{
             console.log(this.navbarKosarGomb.innerHTML)
-            
+            this.oldalElem.innerHTML = "";
             for (let index = 0; index < this.lista.length; index++) 
                 {
-                    this.oldalElem.innerHTML = "";
                     new Kosar(index, this.lista, this.oldalElem);
                 }
         });
+    }
+
+    kosarHozzaad()
+    {
+
     }
 }
