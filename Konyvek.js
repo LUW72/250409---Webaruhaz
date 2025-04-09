@@ -1,7 +1,6 @@
 import Konyv from "./Konyv.js";
 import Kosar from "./Kosar.js";
 
-
 export default class Konyvek
 {
     pElem;
@@ -18,22 +17,23 @@ export default class Konyvek
         this.megjelenit(this.lista);
         console.log("listener")
         this.kosarListener();
-        
     }
-
 
     megjelenit(lista)
     {
-        this.navbarKonyvekGomb.addEventListener("click", ()=>{
+        this.navbarKonyvekGomb.addEventListener("click", () => {
             this.oldalElem.innerHTML = "";
-            console.log(this.navbarKonyvekGomb.innerHTML)
+            console.log(this.navbarKonyvekGomb.innerHTML);
             for (let index = 0; index < lista.length; index++) 
-                {
-                    new Konyv(index, lista[index], this.oldalElem);
-                }
+            {
+                new Konyv(index, lista[index], this.oldalElem);
+            }
         });
 
-        this.#renderKosar();
+        this.navbarKosarGomb.addEventListener("click", () => {
+            console.log("Kosár megjelenítése:", this.navbarKosarGomb.innerHTML);
+            this.#renderKosar();
+        });
     }
 
     kosarListener() 
@@ -41,16 +41,18 @@ export default class Konyvek
         window.addEventListener("kosarHozzaad", (event) => {
             const index = event.detail;
             const item = this.#kosarLista.find(elem => elem.index === index);
-            if (item) {
+            if (item) 
+            {
                 item.amount++;
-            } else {
+            } 
+            else 
+            {
                 this.#kosarLista.push({ index: index, amount: 1 });
             }
-            console.log(this.#kosarLista)
+            console.log("➕ kosarHozzaad:", this.#kosarLista);
+            this.#renderKosar();
         });
 
-        // ➕ Plus button
-        console.log("asd")
         window.addEventListener("mennyisegNovel", (event) => {
             const index = event.detail;
             const item = this.#kosarLista.find(elem => elem.index === index);
@@ -58,16 +60,15 @@ export default class Konyvek
             {
                 item.amount++;
                 this.#renderKosar();
-
             }
-            console.log(this.#kosarLista)
+            console.log("➕ mennyisegNovel:", this.#kosarLista);
         });
 
         window.addEventListener("mennyisegCsokkent", (event) => {
             const index = event.detail;
             const item = this.#kosarLista.find(elem => elem.index === index);
             if (item) 
-            {
+                {
                 item.amount--;
                 if (item.amount <= 0) 
                 {
@@ -75,29 +76,26 @@ export default class Konyvek
                 }
                 this.#renderKosar();
             }
+            console.log("➖ mennyisegCsokkent:", this.#kosarLista);
         });
 
         window.addEventListener("delete", (event) => {
             const index = event.detail;
             this.#kosarLista = this.#kosarLista.filter(elem => elem.index !== index);
             this.#renderKosar();
+            console.log("❌ delete:", this.#kosarLista);
         });
     }
 
     #renderKosar() 
     {
-        this.navbarKosarGomb.addEventListener("click", () => {
-            console.log("Kosár megjelenítése:", this.navbarKosarGomb.innerHTML);
-            this.oldalElem.innerHTML = "";
-    
-            for (let i = 0; i < this.#kosarLista.length; i++) 
+        this.oldalElem.innerHTML = "";
+        for (let i = 0; i < this.#kosarLista.length; i++) {
+            const kosarElem = this.#kosarLista[i];
+            if (kosarElem.amount > 0) 
             {
-                const kosarElem = this.#kosarLista[i];
-                if (kosarElem.amount > 0) 
-                {
-                    new Kosar(kosarElem.index, this.lista, this.oldalElem, kosarElem.amount);
-                }
+                new Kosar(kosarElem.index, this.lista, this.oldalElem, kosarElem.amount);
             }
-        });
+        }
     }
 }
