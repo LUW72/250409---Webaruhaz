@@ -1,29 +1,35 @@
 export default class Konyv {
     #index;
+    #termekAdat;
   
-    constructor(pElem, kep, cim, szerzo, ar, index) {
-      this.pElem = pElem;
-      this.kep = kep;
-      this.cim = cim;
-      this.szerzo = szerzo;
-      this.ar = ar;
+    constructor(index, termekAdat, pElem) {
       this.#index = index;
-  
+      this.#termekAdat = termekAdat;
+      this.pElem = pElem;
       this.megjelenit();
     }
   
     megjelenit() {
-        this.pElem.innerHTML = `
-                <div class="card mb-3 shadow-sm" style="width: 18rem;">
-                    <img src="${this.kep}" class="card-img-top" alt="${this.cim}">
-                    <div class="card-body">
-                        <h5 class="card-title">${this.cim}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">${this.szerzo}</h6>
-                        <p class="card-text">Ár: ${this.ar} Ft</p>
-                        <button class="btn btn-primary w-100" id="kosarba-${this.#index}">Kosárba</button>
-                    </div>
-                </div>
-                `;
+      let termek = this.#termekAdat[this.#index];
+  
+      let html = `
+      <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="${termek.kep}" class="img-fluid rounded-start" alt="${termek.cim}">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">${termek.cim}</h5>
+              <p class="card-text">${termek.szerzo}</p>
+              <button type="button" class="btn btn-info">Kosárba</button>
+              <p class="card-text"><small class="text-body-secondary">${termek.ar} Ft</small></p>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  
+      this.pElem.insertAdjacentHTML("beforeend", html);
     }
   }
   
