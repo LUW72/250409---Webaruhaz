@@ -22,5 +22,34 @@ export const KONYVLISTA = [
         cim: "Python kiskönyv",
         szerzo: "Magyary Gyula",
         ar: 6165,
-    },    
+    },
+    
+
+
+
+    
+    {
+        kep: "kepek/arulok.jpg",
+        cim: "Az Árulók",
+        szerzo: "Alan Connor",
+        ar: 5690,
+    },
+    {
+        kep: "kepek/magasagyasok.jpg",
+        cim: "Magaságyások",
+        szerzo: "Brigitte Kleinod",
+        ar: 2560,
+    },
+    {
+        kep: "kepek/kertkaland.jpg",
+        cim: "Kertkaland",
+        szerzo: "Dóra Melinda Tünde",
+        ar: 7590,
+    },
+    {
+        kep: "kepek/ragadozok.jpg",
+        cim: "Ragadozók Háza",
+        szerzo: "Diana Hunt",
+        ar: 5301,
+    }
 ];

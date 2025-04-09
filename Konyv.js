@@ -20,7 +20,7 @@ export default class Konyv {
         <p class="text-muted mb-2" style="font-size: 14px;">${this.#termek.szerzo}</p>
         <span class="badge border mb-2 rounded-5" style="background-color: #E6F0EF; color: #6DA8A4">📖 Könyv</span>
         <p class="mb-2 fw-semibold" style="font-size: 18px;">Online ár:<br><span class="text-dark">${this.#termek.ar} Ft</span></p>
-        <button class="kosarbtn btn w-100" style="background-color: #d4a659; color: white;">Kosárba</button>
+        <button class="kosarbtn btn w-100 btn-primary">Kosárba</button>
     </div>
 </div>
 

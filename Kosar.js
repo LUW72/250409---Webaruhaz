@@ -15,28 +15,27 @@ export default class Kosar {
     #render() {
       const termek = this.#termekAdat[this.#index];
   
-      const html = `
-        <div class="card mb-3 shadow-sm p-2 kosar-item">
-          <div class="row g-3 align-items-center">
-            <div class="col-md-3">
-              <img src="${termek.kep}" class="img-fluid rounded" alt="${termek.cim}">
-            </div>
-            <div class="col-md-6">
-              <h5 class="mb-1">${termek.cim}</h5>
-              <p class="mb-2 text-muted">${termek.szerzo}</p>
-              <p class="fw-bold">${termek.ar} Ft</p>
-            </div>
-            <div class="col-md-3 text-end">
-              <div class="input-group mb-2">
-                <button class="btn btn-primary btn-sm minus-btn" type="button">−</button>
-                <input type="text" class="form-control text-center amount-display" value="${this.amount}" style="max-width: 50px;" readonly>
-                <button class="btn btn-primary btn-sm plus-btn" type="button">+</button>
+      const html = `<div class="card mb-3 shadow-sm p-3 kosar-item w-100">
+            <div class="d-flex align-items-center">
+              <div class="flex-shrink-0 me-3" style="width: 100px; height: 140px;">
+                <img src="${termek.kep}" class="img-fluid h-100 w-100 object-fit-cover rounded" alt="${termek.cim}">
               </div>
-              <button class="btn btn-danger btn-sm delete-btn">Eltávolít</button>
+              <div class="flex-grow-1">
+                <h5 class="mb-1">${termek.cim}</h5>
+                <p class="mb-1 text-muted">${termek.szerzo}</p>
+                <p class="fw-bold mb-0">${termek.ar} Ft</p>
+              </div>
+              <div class="d-flex flex-column align-items-end ms-3">
+                <div class="input-group input-group-sm mb-2" style="width: 100px;">
+                  <button class="btn btn-primary minus-btn" type="button">−</button>
+                  <input type="text" class="form-control text-center amount-display" value="${this.amount}" readonly>
+                  <button class="btn btn-primary plus-btn" type="button">+</button>
+                </div>
+                <button class="btn btn-danger btn-sm delete-btn">Eltávolít</button>
+              </div>
             </div>
           </div>
-        </div>
-      `;
+          `;
   
       this.pElem.insertAdjacentHTML("beforeend", html);
       this.elem = this.pElem.lastElementChild;
