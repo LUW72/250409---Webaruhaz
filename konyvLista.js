@@ -6,7 +6,7 @@ export const KONYVLISTA = [
         ar: 5400,
     },
     {
-        kep: "kepek/dune.jpg",
+        kep: "kepek/dune2.jpg",
         cim: "Második könyv",
         szerzo: "Szerző neve 2",
         ar: 4400,
