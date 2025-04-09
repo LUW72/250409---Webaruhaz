@@ -14,33 +14,90 @@ export default class Konyvek
         this.navbarKosarGomb = document.querySelector(".kosar");
         this.oldalElem = document.querySelector(".oldal");
         this.lista = KONYVLISTA;
-        this.megjelenit();
+
+        this.megjelenit(this.lista);
+        console.log("listener")
+        this.kosarListener();
+        
     }
 
 
-    megjelenit()
+    megjelenit(lista)
     {
         this.navbarKonyvekGomb.addEventListener("click", ()=>{
             this.oldalElem.innerHTML = "";
             console.log(this.navbarKonyvekGomb.innerHTML)
-            for (let index = 0; index < this.lista.length; index++) 
+            for (let index = 0; index < lista.length; index++) 
                 {
-                    new Konyv(index, this.lista, this.oldalElem);
+                    new Konyv(index, lista[index], this.oldalElem);
                 }
         });
 
-        this.navbarKosarGomb.addEventListener("click", ()=>{
-            console.log(this.navbarKosarGomb.innerHTML)
-            this.oldalElem.innerHTML = "";
-            for (let index = 0; index < this.lista.length; index++) 
+        this.#renderKosar();
+    }
+
+    kosarListener() 
+    {
+        window.addEventListener("kosarHozzaad", (event) => {
+            const index = event.detail;
+            const item = this.#kosarLista.find(elem => elem.index === index);
+            if (item) {
+                item.amount++;
+            } else {
+                this.#kosarLista.push({ index: index, amount: 1 });
+            }
+            console.log(this.#kosarLista)
+        });
+
+        // ➕ Plus button
+        console.log("asd")
+        window.addEventListener("mennyisegNovel", (event) => {
+            const index = event.detail;
+            const item = this.#kosarLista.find(elem => elem.index === index);
+            if (item) 
+            {
+                item.amount++;
+                this.#renderKosar();
+
+            }
+            console.log(this.#kosarLista)
+        });
+
+        window.addEventListener("mennyisegCsokkent", (event) => {
+            const index = event.detail;
+            const item = this.#kosarLista.find(elem => elem.index === index);
+            if (item) 
+            {
+                item.amount--;
+                if (item.amount <= 0) 
                 {
-                    new Kosar(index, this.lista, this.oldalElem);
+                    this.#kosarLista = this.#kosarLista.filter(elem => elem.index !== index);
                 }
+                this.#renderKosar();
+            }
+        });
+
+        window.addEventListener("delete", (event) => {
+            const index = event.detail;
+            this.#kosarLista = this.#kosarLista.filter(elem => elem.index !== index);
+            this.#renderKosar();
         });
     }
 
-    kosarHozzaad()
+    #renderKosar() 
     {
-
+        this.navbarKosarGomb.addEventListener("click", () => {
+            console.log("Kosár megjelenítése:", this.navbarKosarGomb.innerHTML);
+            this.oldalElem.innerHTML = "";
+    
+            for (let i = 0; i < this.#kosarLista.length; i++) 
+            {
+                const kosarElem = this.#kosarLista[i];
+                if (kosarElem.amount > 0) 
+                {
+                    new Kosar(kosarElem.index, this.lista, this.oldalElem, kosarElem.amount);
+                }
+            }
+        });
     }
 }

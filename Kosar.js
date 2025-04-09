@@ -1,21 +1,25 @@
 export default class Kosar {
     #index;
     #termekAdat;
+    amount = 0;
+    elem;
   
-    constructor(index, termekAdat, pElem) {
+    constructor(index, termekAdat, pElem, amount) {
       this.#index = index;
       this.#termekAdat = termekAdat;
       this.pElem = pElem;
-      this.megjelenit();
+      this.amount = amount;
+      this.#render();
     }
+    
+    #render() {
+      const termek = this.#termekAdat[this.#index];
   
-    megjelenit() {
-      let termek = this.#termekAdat[this.#index];
-      let html = `
-        <div class="card mb-3 shadow-sm p-2">
+      const html = `
+        <div class="card mb-3 shadow-sm p-2 kosar-item">
           <div class="row g-3 align-items-center">
             <div class="col-md-3">
-              <img src="..." class="img-fluid rounded" alt="${termek.cim}">
+              <img src="${termek.kep}" class="img-fluid rounded" alt="${termek.cim}">
             </div>
             <div class="col-md-6">
               <h5 class="mb-1">${termek.cim}</h5>
@@ -24,26 +28,41 @@ export default class Kosar {
             </div>
             <div class="col-md-3 text-end">
               <div class="input-group mb-2">
-                <button class="btn btn-primary" type="button">−</button>
-                <input type="text" class="form-control text-center" value="1" style="max-width: 50px;">
-                <button class="btn btn-primary" type="button">+</button>
+                <button class="btn btn-primary btn-sm minus-btn" type="button">−</button>
+                <input type="text" class="form-control text-center amount-display" value="${this.amount}" style="max-width: 50px;" readonly>
+                <button class="btn btn-primary btn-sm plus-btn" type="button">+</button>
               </div>
-              <button class="btn btn-primary btn-sm">Eltávolít</button>
+              <button class="btn btn-danger btn-sm delete-btn">Eltávolít</button>
             </div>
           </div>
         </div>
       `;
-    
+  
       this.pElem.insertAdjacentHTML("beforeend", html);
+      this.elem = this.pElem.lastElementChild;
+  
+      this.#addListeners();
     }
-    
-    delete(){
-      this.deleteElem.addEventListener("click", () => {
-        const e = new CustomEvent("delete", { detail: this.#index });
-        window.dispatchEvent(e);
-        
+  
+    #addListeners() {
+      const plusBtn = this.elem.querySelector(".plus-btn");
+      const minusBtn = this.elem.querySelector(".minus-btn");
+      const deleteBtn = this.elem.querySelector(".delete-btn");
+  
+      plusBtn.addEventListener("click", () => {
+        console.log(`➕ Plus clicked on index ${this.#index}`);
+        window.dispatchEvent(new CustomEvent("mennyisegNovel", { detail: this.#index }));
+      });
+  
+      minusBtn.addEventListener("click", () => {
+        console.log(`➖ Minus clicked on index ${this.#index}`);
+        window.dispatchEvent(new CustomEvent("mennyisegCsokkent", { detail: this.#index }));
+      });
+  
+      deleteBtn.addEventListener("click", () => {
+        console.log(`❌ Delete clicked on index ${this.#index}`);
+        window.dispatchEvent(new CustomEvent("delete", { detail: this.#index }));
       });
     }
-    
   }
   
